@@ -370,3 +370,8 @@ O nome original do arquivo **nunca é usado** no servidor — um nome hexadecima
 | `upload_file($file, $dir, ...)`     | Valida e move um arquivo enviado, retorna o caminho    |
 | `csrf_field($token)`                | Retorna `<input type="hidden">` com o token CSRF       |
 | `avatar_initials($nome)`            | Iniciais do nome para avatar (ex: "Rafael Silva" → RS) |
+
+
+Email: admin@ifsp.edu.br
+Senha (pretendida): Admin@123
+Tipo: professor

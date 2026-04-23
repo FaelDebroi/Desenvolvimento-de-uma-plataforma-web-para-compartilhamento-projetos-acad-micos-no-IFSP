@@ -7,7 +7,7 @@ class Projeto
     }
 
     // ── Listagem com filtros e paginação ──────────────────────
-
+    // Busca projetos com filtros opcionais, ordenação e paginação
     public static function findAll(array $f = [], int $page = 1, int $perPage = 20): array
     {
         [$where, $params] = self::buildWhere($f);
@@ -18,7 +18,7 @@ class Projeto
         };
 
         $offset = ($page - 1) * $perPage;
-
+        // Consulta otimizada para listagem, trazendo apenas os campos necessários e usando GROUP_CONCAT para tecnologias
         $sql = "SELECT p.*, u.nome AS autor_nome, u.tipo AS autor_tipo,
                        u.foto_perfil AS autor_foto,
                        GROUP_CONCAT(DISTINCT t.nome ORDER BY t.nome SEPARATOR ',') AS tecnologias
