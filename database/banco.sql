@@ -154,9 +154,83 @@ INSERT INTO tecnologias (nome) VALUES
     ('Arduino'), ('Raspberry Pi'), ('Machine Learning'),
     ('Android'), ('Flutter'), ('Docker'), ('Git');
 
--- Usuário administrador / professor de exemplo
--- Senha: Admin@123  (hash gerado com password_hash no PHP)
-INSERT INTO usuarios (nome, email, senha, tipo, curso) VALUES
-    ('Administrador IFSP', 'admin@ifsp.edu.br',
-     '$2y$12$examplehashplaceholderXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-     'professor', 'Tecnologia em Análise e Desenvolvimento de Sistemas');
+-- ============================================================
+-- USUÁRIOS DE TESTE
+-- ============================================================
+
+-- Professor (tipo: professor) — Senha: Prof@123
+INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github) VALUES
+    ('Prof. Rafael Souza', 'professor@ifsp.edu.br',
+     '$2y$12$txs/LBUS1DKGli1uwkCxqul/ygn2t5Nu9ZgI/NBVYDm5c/02XBMYa',
+     'professor', 'Tecnologia em Análise e Desenvolvimento de Sistemas',
+     'Professor de Engenharia de Software e Sistemas Web no IFSP.',
+     'https://linkedin.com/in/rafael-souza',
+     'https://github.com/rafaelsouza');
+
+-- Aluno (tipo: aluno) — Senha: Aluno@123
+INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github) VALUES
+    ('Ana Clara Lima', 'aluno@ifsp.edu.br',
+     '$2y$12$iWmIF.6bYjViGX.egJKD7.HPowBHba1XMH0gR6ng3CzzcR/J2Fh7O',
+     'aluno', 'Tecnologia em Análise e Desenvolvimento de Sistemas',
+     'Estudante de ADS apaixonada por desenvolvimento web e machine learning.',
+     'https://linkedin.com/in/ana-clara-lima',
+     'https://github.com/anaclaralima');
+
+-- ============================================================
+-- PROJETOS DE TESTE (4 projetos)
+-- ============================================================
+
+-- Projeto 1 — do aluno (id=2), concluído, área Web
+INSERT INTO projetos (usuario_id, titulo, descricao, area, status, repositorio, visualizacoes, publicado) VALUES
+    (2,
+     'Plataforma de E-commerce com PHP e MySQL',
+     'Sistema completo de loja virtual desenvolvido como projeto integrador do 4º semestre. Conta com catálogo de produtos, carrinho de compras, autenticação de usuários, painel administrativo e integração com gateway de pagamento sandbox. Arquitetura MVC sem frameworks, totalmente feita do zero.',
+     'Web',
+     'concluido',
+     'https://github.com/anaclaralima/ecommerce-php',
+     142,
+     1);
+
+-- Projeto 2 — do aluno (id=2), em desenvolvimento, área Mobile
+INSERT INTO projetos (usuario_id, titulo, descricao, area, status, repositorio, visualizacoes, publicado) VALUES
+    (2,
+     'App de Gestão de Tarefas com Flutter',
+     'Aplicativo mobile multiplataforma (Android e iOS) para gerenciamento de tarefas pessoais e em equipe. Possui autenticação via Google, sincronização em tempo real com Firebase, notificações push e modo offline com SQLite local. Projeto em andamento como TCC.',
+     'Mobile',
+     'em_desenvolvimento',
+     'https://github.com/anaclaralima/taskmanager-flutter',
+     87,
+     1);
+
+-- Projeto 3 — do professor (id=1), concluído, área IA
+INSERT INTO projetos (usuario_id, titulo, descricao, area, status, repositorio, visualizacoes, publicado) VALUES
+    (1,
+     'Classificador de Imagens com Machine Learning',
+     'Modelo de rede neural convolucional (CNN) treinado com TensorFlow/Keras para classificação de plantas doentes em lavouras. Dataset com 15.000 imagens, acurácia de 94% no conjunto de validação. Desenvolvido em parceria com o curso de Agronomia como pesquisa aplicada.',
+     'IA',
+     'concluido',
+     'https://github.com/rafaelsouza/plant-disease-cnn',
+     310,
+     1);
+
+-- Projeto 4 — do professor (id=1), beta, área Hardware
+INSERT INTO projetos (usuario_id, titulo, descricao, area, status, repositorio, visualizacoes, publicado) VALUES
+    (1,
+     'Estação de Monitoramento Ambiental com Arduino',
+     'Dispositivo IoT baseado em Arduino Mega que monitora temperatura, umidade, qualidade do ar e luminosidade. Os dados são enviados via MQTT para um servidor Node.js e exibidos em dashboard web em tempo real com Chart.js. Protótipo funcional em fase beta.',
+     'Hardware',
+     'beta',
+     'https://github.com/rafaelsouza/arduino-env-monitor',
+     195,
+     1);
+
+-- Tags dos projetos
+INSERT INTO projeto_tecnologias (projeto_id, tecnologia_id) VALUES
+    -- Projeto 1: PHP, MySQL, JavaScript, HTML5, CSS3
+    (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
+    -- Projeto 2: Flutter, Android
+    (2, 20), (2, 19),
+    -- Projeto 3: Python, Machine Learning
+    (3, 6), (3, 18),
+    -- Projeto 4: Arduino, C, Node.js
+    (4, 16), (4, 8), (4, 14);

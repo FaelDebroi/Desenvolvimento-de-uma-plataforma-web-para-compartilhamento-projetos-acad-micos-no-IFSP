@@ -3,6 +3,7 @@ class Controller
 {
     // ── Rendering ─────────────────────────────────────────────
 
+    // Renderiza uma view com os dados fornecidos
     protected function view(string $view, array $data = []): void
     {
         extract($data, EXTR_SKIP);
@@ -12,7 +13,7 @@ class Controller
         }
         require $path;
     }
-
+    // Redireciona para outra rota
     protected function redirect(string $path = ''): void
     {
         header('Location: ' . BASE_URL . '/' . ltrim($path, '/'));
@@ -20,7 +21,7 @@ class Controller
     }
 
     // ── Auth guards ───────────────────────────────────────────
-
+    // Verifica se o usuário está autenticado, caso contrário redireciona para login
     protected function requireAuth(): void
     {
         if (empty($_SESSION['usuario_id'])) {
@@ -29,14 +30,14 @@ class Controller
             $this->redirect('login');
         }
     }
-
+    // Verifica se o usuário é convidado (não autenticado), caso contrário redireciona para a página inicial
     protected function requireGuest(): void
     {
         if (!empty($_SESSION['usuario_id'])) {
             $this->redirect('');
         }
     }
-
+    // Retorna os dados do usuário atualmente autenticado, ou null se não houver
     protected function currentUser(): ?array
     {
         if (empty($_SESSION['usuario_id'])) return null;
@@ -44,12 +45,12 @@ class Controller
     }
 
     // ── Flash messages ────────────────────────────────────────
-
+    // Define uma mensagem flash para ser exibida na próxima requisição
     protected function flash(string $type, string $message): void
     {
         $_SESSION['flash'] = compact('type', 'message');
     }
-
+    // Obtém e limpa a mensagem flash da sessão
     public function getFlash(): ?array
     {
         if (!isset($_SESSION['flash'])) return null;
@@ -59,7 +60,7 @@ class Controller
     }
 
     // ── CSRF ──────────────────────────────────────────────────
-
+    // Gera um token CSRF e o armazena na sessão
     protected function csrfToken(): string
     {
         if (empty($_SESSION['csrf_token'])) {
@@ -67,7 +68,7 @@ class Controller
         }
         return $_SESSION['csrf_token'];
     }
-
+    // Verifica se o token CSRF enviado no formulário é válido
     protected function verifyCsrf(): void
     {
         $token = $_POST['csrf_token'] ?? '';
@@ -78,7 +79,7 @@ class Controller
     }
 
     // ── JSON helper ───────────────────────────────────────────
-
+    // Envia uma resposta JSON com os dados fornecidos e o status HTTP especificado
     protected function json(array $data, int $status = 200): never
     {
         http_response_code($status);
