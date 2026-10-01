@@ -67,7 +67,7 @@
             <?php if (!empty($projeto['repositorio'])): ?>
                 <section class="project-section">
                     <h2 class="project-section__title">Repositório</h2>
-                    <a href="<?= h($projeto['repositorio']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+                    <a href="<?= h($projeto['repositorio']) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--wrap">
                         🔗 <?= h($projeto['repositorio']) ?>
                     </a>
                 </section>

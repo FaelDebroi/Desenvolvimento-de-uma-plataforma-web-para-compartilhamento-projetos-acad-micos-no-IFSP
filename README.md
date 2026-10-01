@@ -2,6 +2,15 @@
 
 Plataforma web desenvolvida como TCC para o IFSP Campinas. Permite que alunos e professores publiquem, visualizem e interajam com projetos acadêmicos.
 
+**🌐 Acesse a plataforma publicada:** https://grupoalmanaque.com.br/tcc
+
+| Perfil    | E-mail                 | Senha       |
+|-----------|------------------------|-------------|
+| Professor | professor@ifsp.edu.br  | Ifsp@2026   |
+| Aluno     | aluno@ifsp.edu.br      | Ifsp@2026   |
+
+> Contas de demonstração para avaliação. A versão do código avaliada pela banca corresponde à release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc).
+
 ---
 
 ## Índice
@@ -12,10 +21,11 @@ Plataforma web desenvolvida como TCC para o IFSP Campinas. Permite que alunos e 
 4. [Fluxo de uma requisição](#fluxo-de-uma-requisição)
 5. [Banco de dados](#banco-de-dados)
 6. [Rotas disponíveis](#rotas-disponíveis)
-7. [Como iniciar o projeto](#como-iniciar-o-projeto)
-8. [Configuração](#configuração)
-9. [Segurança](#segurança)
-10. [Upload de arquivos](#upload-de-arquivos)
+7. [Ambientes e implantação](#ambientes-e-implantação)
+8. [Como iniciar o projeto](#como-iniciar-o-projeto)
+9. [Configuração](#configuração)
+10. [Segurança](#segurança)
+11. [Upload de arquivos](#upload-de-arquivos)
 
 ---
 
@@ -26,7 +36,7 @@ Plataforma web desenvolvida como TCC para o IFSP Campinas. Permite que alunos e 
 | Backend    | PHP 8.x                           |
 | Banco      | MySQL 8.x                         |
 | Frontend   | HTML5, CSS3, JavaScript (ES6+)    |
-| Servidor   | Apache (XAMPP)                    |
+| Servidor   | Apache (XAMPP) em desenvolvimento; Hostinger em produção |
 | Arquitetura| MVC sem framework, sem Composer   |
 
 ---
@@ -233,7 +243,20 @@ usuarios ──< recuperacao_senha
 
 ---
 
+## Ambientes e implantação
+
+| Ambiente        | Onde roda                         | Uso                                   |
+|-----------------|-----------------------------------|---------------------------------------|
+| Desenvolvimento | XAMPP local (Apache, PHP, MySQL)  | Desenvolvimento e testes preliminares |
+| Produção        | Hostinger — https://grupoalmanaque.com.br/tcc | Versão publicada e avaliada   |
+
+O código é versionado neste repositório e implantado na Hostinger pela integração com Git do painel da hospedagem. As credenciais do banco de produção ficam apenas no servidor e não são versionadas; o `config/config.php` deste repositório traz os valores do ambiente local.
+
+---
+
 ## Como iniciar o projeto
+
+Para executar uma cópia local (desenvolvimento):
 
 ### Pré-requisitos
 
@@ -276,11 +299,13 @@ define('BASE_PATH', '/tcc');
 
 Edite `C:\xampp\php\php.ini`:
 ```ini
-upload_max_filesize = 200M
-post_max_size       = 210M
+upload_max_filesize = 256M
+post_max_size       = 260M
 max_execution_time  = 300
 max_input_time      = 300
 ```
+
+> Esses valores precisam ser iguais ou maiores que `MAX_FILE_SIZE` (250 MB), definido em `config/config.php`; caso contrário, o limite efetivo passa a ser o do PHP. Em produção, na Hostinger, os mesmos limites são ajustados no painel da hospedagem (configurações de PHP).
 Reinicie o Apache no painel do XAMPP após salvar.
 
 **5. Habilitar mod_rewrite**
@@ -317,8 +342,8 @@ Todas as constantes ficam em `config/config.php`:
 | `DB_PASS`            | _(vazio)_                     | Senha do MySQL                     |
 | `BASE_URL`           | `http://localhost/tcc`        | URL base da aplicação              |
 | `BASE_PATH`          | `/tcc`                        | Caminho base para o roteador       |
-| `MAX_IMAGE_SIZE`     | `200 MB`                      | Limite de imagens de capa e perfil |
-| `MAX_FILE_SIZE`      | `200 MB`                      | Limite de arquivos anexados        |
+| `MAX_IMAGE_SIZE`     | `250 MB`                      | Limite de imagens de capa e perfil |
+| `MAX_FILE_SIZE`      | `250 MB`                      | Limite de arquivos anexados        |
 | `MAIL_FROM`          | `noreply@ifsp.edu.br`         | Remetente dos e-mails              |
 
 ---

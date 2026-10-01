@@ -17,7 +17,7 @@
             <span class="navbar__title"><?= SITE_NAME ?></span>
         </a>
 
-        <button class="navbar__toggle" id="navToggle" aria-label="Menu">
+        <button class="navbar__toggle" id="navToggle" aria-label="Menu" aria-controls="navMenu" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
 
@@ -56,6 +56,7 @@
         </nav>
     </div>
 </header>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- ── Flash message ──────────────────────────────────────── -->
 <?php

@@ -2,20 +2,45 @@
 
 /* ── Mobile nav ─────────────────────────────────────────── */
 (function () {
-    const toggle = document.getElementById('navToggle');
-    const menu   = document.getElementById('navMenu');
+    const toggle  = document.getElementById('navToggle');
+    const menu    = document.getElementById('navMenu');
+    const overlay = document.getElementById('navOverlay');
     if (!toggle || !menu) return;
 
-    toggle.addEventListener('click', () => {
-        const open = menu.classList.toggle('is-open');
+    function setOpen(open) {
+        menu.classList.toggle('is-open', open);
+        toggle.classList.toggle('is-active', open);
         toggle.setAttribute('aria-expanded', open);
+        if (overlay) overlay.classList.toggle('is-open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    toggle.addEventListener('click', () => {
+        setOpen(!menu.classList.contains('is-open'));
+    });
+
+    if (overlay) overlay.addEventListener('click', () => setOpen(false));
+
+    // Close when a menu link is clicked
+    menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
     });
 
     // Close on outside click
     document.addEventListener('click', (e) => {
         if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-            menu.classList.remove('is-open');
+            setOpen(false);
         }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+    });
+
+    // Close if resized back to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) setOpen(false);
     });
 })();
 
