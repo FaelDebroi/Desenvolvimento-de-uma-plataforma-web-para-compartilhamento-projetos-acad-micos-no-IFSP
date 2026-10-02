@@ -137,7 +137,7 @@
                                             <?= avatar_initials($proj['autor_nome']) ?>
                                         </span>
                                     <?php endif; ?>
-                                    <span><?= h($proj['autor_nome']) ?></span>
+                                    <span class="card__author-name"><?= h($proj['autor_nome']) ?></span>
                                     <?php if ($proj['autor_tipo'] === 'professor'): ?>
                                         <span class="badge badge-info badge--xs">Prof.</span>
                                     <?php endif; ?>

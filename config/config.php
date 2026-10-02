@@ -1,14 +1,15 @@
 <?php
 // ── Database ──────────────────────────────────────────────────
-define('DB_HOST', 'localhost');
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3308');
 define('DB_NAME', 'tcc_ifsp');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // ── Application ───────────────────────────────────────────────
-define('BASE_URL', 'http://localhost/tcc');
-define('BASE_PATH', '/tcc');
+define('BASE_URL', 'http://localhost/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP');
+define('BASE_PATH', '/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP');
 define('SITE_NAME', 'IFSP Projetos');
 
 // ── Uploads ───────────────────────────────────────────────────

@@ -486,7 +486,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     min-width: 0;
 }
 .card__author:hover { color: var(--primary); text-decoration: none; }
-.card__author > span:first-of-type { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.card__author-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .card__author .badge { flex-shrink: 0; }
 .card__author-avatar {
     width: 26px; height: 26px;
@@ -502,6 +502,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: var(--white);
     font-size: 10px;
     font-weight: 700;
+    flex-shrink: 0;
 }
 
 .card__tags { display: flex; flex-wrap: wrap; gap: 4px; }
