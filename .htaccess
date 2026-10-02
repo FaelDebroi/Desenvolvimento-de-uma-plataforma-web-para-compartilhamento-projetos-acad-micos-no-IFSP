@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteBase /tcc/
+RewriteBase /Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

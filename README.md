@@ -287,6 +287,7 @@ mysql -u root -p < database/banco.sql
 Edite `config/config.php` conforme seu ambiente:
 ```php
 define('DB_HOST', 'localhost');
+define('DB_PORT', '3306');       // porta do MySQL (padrão do XAMPP; ajuste se houver conflito com outra instância)
 define('DB_NAME', 'tcc_ifsp');
 define('DB_USER', 'root');
 define('DB_PASS', '');           // senha do MySQL no XAMPP (padrão vazio)
@@ -294,6 +295,8 @@ define('DB_PASS', '');           // senha do MySQL no XAMPP (padrão vazio)
 define('BASE_URL',  'http://localhost/tcc');
 define('BASE_PATH', '/tcc');
 ```
+
+> Se copiar o projeto para uma pasta com nome diferente de `tcc`, atualize também `RewriteBase` em `.htaccess` para o novo nome — caso contrário a home carrega, mas as demais rotas (`/login`, `/projetos`, etc.) retornam 404.
 
 **4. Configurar limites de upload no PHP**
 
@@ -337,6 +340,7 @@ Todas as constantes ficam em `config/config.php`:
 | Constante            | Padrão                        | Descrição                          |
 |----------------------|-------------------------------|------------------------------------|
 | `DB_HOST`            | `localhost`                   | Host do MySQL                      |
+| `DB_PORT`            | `3306`                        | Porta do MySQL                     |
 | `DB_NAME`            | `tcc_ifsp`                    | Nome do banco                      |
 | `DB_USER`            | `root`                        | Usuário do MySQL                   |
 | `DB_PASS`            | _(vazio)_                     | Senha do MySQL                     |
