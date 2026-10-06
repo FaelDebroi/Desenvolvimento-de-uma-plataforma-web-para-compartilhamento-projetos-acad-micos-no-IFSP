@@ -3,7 +3,7 @@
 Plataforma web desenvolvida como TCC para o IFSP Campinas. Permite que alunos e professores publiquem, visualizem e interajam com projetos acadêmicos.
 
 **🌐 Acesse a plataforma publicada:** https://grupoalmanaque.com.br/tcc
-
+   > As credenciais das contas de demonstração (aluno e professor) são fornecidas à banca separadamente. A versão do código avaliada pela banca corresponde à release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc).
 
 > Contas de demonstração para avaliação. A versão do código avaliada pela banca corresponde à release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc).
 
