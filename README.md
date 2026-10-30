@@ -1,11 +1,12 @@
 # IFSP Projetos — Plataforma de Compartilhamento de Projetos Acadêmicos
 
-Plataforma web desenvolvida como TCC para o IFSP Campinas. Permite que alunos e professores publiquem, visualizem e interajam com projetos acadêmicos.
+**🌐 Plataforma publicada:** https://grupoalmanaque.com.br/tcc
 
-**🌐 Acesse a plataforma publicada:** https://grupoalmanaque.com.br/tcc
-   > As credenciais das contas de demonstração (aluno e professor) são fornecidas à banca separadamente. A versão do código avaliada pela banca corresponde à release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc).
+Plataforma web desenvolvida como Trabalho de Conclusão de Curso (TCC) no IFSP — Campus Campinas. Permite que alunos e professores publiquem, visualizem e interajam com projetos acadêmicos.
 
-> Contas de demonstração para avaliação. A versão do código avaliada pela banca corresponde à release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc).
+> **Versão avaliada pela banca:** a release [`v1.0-tcc`](https://github.com/FaelDebroi/Desenvolvimento-de-uma-plataforma-web-para-compartilhamento-projetos-acad-micos-no-IFSP/releases/tag/v1.0-tcc) corresponde ao código da versão final do texto do TCC.
+>
+> As credenciais das contas de demonstração (aluno e professor) são fornecidas à banca separadamente e não constam neste repositório.
 
 ---
 
@@ -395,8 +396,3 @@ O nome original do arquivo **nunca é usado** no servidor — um nome hexadecima
 | `upload_file($file, $dir, ...)`     | Valida e move um arquivo enviado, retorna o caminho    |
 | `csrf_field($token)`                | Retorna `<input type="hidden">` com o token CSRF       |
 | `avatar_initials($nome)`            | Iniciais do nome para avatar (ex: "Rafael Silva" → RS) |
-
-
-Email: admin@ifsp.edu.br
-Senha (pretendida): Admin@123
-Tipo: professor
