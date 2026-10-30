@@ -67,6 +67,11 @@ class ProjetoController extends Controller
             }
         }
 
+        $rejeitadosAnexos = $this->validateAnexos();
+        if (!empty($rejeitadosAnexos)) {
+            $erros[] = 'Arquivo(s) inválido(s) ou acima do limite: ' . implode(', ', $rejeitadosAnexos) . '.';
+        }
+
         if (!empty($erros)) {
             $this->view('projetos.create', [
                 'pageTitle' => 'Novo projeto',
@@ -92,14 +97,10 @@ class ProjetoController extends Controller
             'tecnologias' => $tags,
         ]);
 
-        // Anexos opcionais
-        $rejeitados = $this->handleFileUploads($id);
+        // Anexos opcionais (já validados acima)
+        $this->handleFileUploads($id);
 
-        if (empty($rejeitados)) {
-            $this->flash('success', 'Projeto publicado com sucesso!');
-        } else {
-            $this->flash('warning', 'Projeto publicado com sucesso! Porém, o(s) arquivo(s) a seguir foi(ram) rejeitado(s) por tipo não permitido ou tamanho acima do limite: ' . implode(', ', $rejeitados) . '.');
-        }
+        $this->flash('success', 'Projeto publicado com sucesso!');
         $this->redirect("projeto/{$id}");
     }
 
@@ -150,6 +151,24 @@ class ProjetoController extends Controller
             }
         }
 
+        $rejeitadosAnexos = $this->validateAnexos();
+        if (!empty($rejeitadosAnexos)) {
+            $erros[] = 'Arquivo(s) inválido(s) ou acima do limite: ' . implode(', ', $rejeitadosAnexos) . '.';
+        }
+
+        if (!empty($erros)) {
+            $this->view('projetos.edit', [
+                'pageTitle' => 'Editar projeto',
+                'erros' => $erros,
+                'projeto' => array_merge($projeto, $_POST),
+                'arquivos' => Arquivo::findByProjeto((int) $projeto['id']),
+                'tecnologias' => Projeto::getAllTecnologias(),
+                'usuario' => $this->currentUser(),
+                'csrf' => $this->csrfToken(),
+            ]);
+            return;
+        }
+
         $tags = $this->parseTecnologias($_POST['tags'] ?? '');
 
         Projeto::update((int) $projeto['id'], [
@@ -162,7 +181,8 @@ class ProjetoController extends Controller
             'tecnologias' => $tags,
         ]);
 
-        $rejeitados = $this->handleFileUploads((int) $projeto['id']);
+        // Anexos opcionais (já validados acima)
+        $this->handleFileUploads((int) $projeto['id']);
 
         // Remover arquivos marcados para deleção
         foreach ($_POST['remover_arquivo'] ?? [] as $arquivoId) {
@@ -172,11 +192,7 @@ class ProjetoController extends Controller
             }
         }
 
-        if (empty($rejeitados)) {
-            $this->flash('success', 'Projeto atualizado com sucesso!');
-        } else {
-            $this->flash('warning', 'Projeto atualizado com sucesso! Porém, o(s) arquivo(s) a seguir foi(ram) rejeitado(s) por tipo não permitido ou tamanho acima do limite: ' . implode(', ', $rejeitados) . '.');
-        }
+        $this->flash('success', 'Projeto atualizado com sucesso!');
         $this->redirect("projeto/{$projeto['id']}");
     }
 
@@ -275,6 +291,45 @@ class ProjetoController extends Controller
     private function parseTecnologias(string $raw): array
     {
         return array_filter(array_map('trim', explode(',', $raw)));
+    }
+
+    private function validateAnexos(): array
+    {
+        $rejeitados = [];
+
+        if (empty($_FILES['arquivos']['name'][0]))
+            return $rejeitados;
+
+        $files = $_FILES['arquivos'];
+        $count = count($files['name']);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($files['error'][$i] === UPLOAD_ERR_NO_FILE)
+                continue;
+
+            $nome = $files['name'][$i];
+            $tmpName = $files['tmp_name'][$i];
+
+            if ($files['error'][$i] !== UPLOAD_ERR_OK || !is_uploaded_file($tmpName)) {
+                $rejeitados[] = $nome;
+                continue;
+            }
+
+            if ($files['size'][$i] > MAX_FILE_SIZE) {
+                $rejeitados[] = $nome;
+                continue;
+            }
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $tmpName);
+            finfo_close($finfo);
+
+            if (!in_array($mime, ALLOWED_FILE_TYPES, true)) {
+                $rejeitados[] = $nome;
+            }
+        }
+
+        return $rejeitados;
     }
 
     private function handleFileUploads(int $projetoId): array
