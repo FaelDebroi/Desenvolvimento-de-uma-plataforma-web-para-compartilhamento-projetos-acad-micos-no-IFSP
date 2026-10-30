@@ -298,7 +298,7 @@ class ProjetoController extends Controller
                 'error' => $files['error'][$i],
             ];
 
-            if ($file['error'] !== UPLOAD_ERR_OK) {
+            if ($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
                 $rejeitados[] = $file['name'];
                 continue;
             }

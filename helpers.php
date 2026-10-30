@@ -71,6 +71,7 @@ function upload_file(array $file, string $dir, array $allowedTypes, int $maxSize
 {
     if ($file['error'] !== UPLOAD_ERR_OK) return false;
     if ($file['size'] > $maxSize)         return false;
+    if (!is_uploaded_file($file['tmp_name'])) return false;
 
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mime  = finfo_file($finfo, $file['tmp_name']);
