@@ -93,9 +93,13 @@ class ProjetoController extends Controller
         ]);
 
         // Anexos opcionais
-        $this->handleFileUploads($id);
+        $rejeitados = $this->handleFileUploads($id);
 
-        $this->flash('success', 'Projeto publicado com sucesso!');
+        if (empty($rejeitados)) {
+            $this->flash('success', 'Projeto publicado com sucesso!');
+        } else {
+            $this->flash('warning', 'Projeto publicado com sucesso! Porém, o(s) arquivo(s) a seguir foi(ram) rejeitado(s) por tipo não permitido ou tamanho acima do limite: ' . implode(', ', $rejeitados) . '.');
+        }
         $this->redirect("projeto/{$id}");
     }
 
@@ -158,7 +162,7 @@ class ProjetoController extends Controller
             'tecnologias' => $tags,
         ]);
 
-        $this->handleFileUploads((int) $projeto['id']);
+        $rejeitados = $this->handleFileUploads((int) $projeto['id']);
 
         // Remover arquivos marcados para deleção
         foreach ($_POST['remover_arquivo'] ?? [] as $arquivoId) {
@@ -168,7 +172,11 @@ class ProjetoController extends Controller
             }
         }
 
-        $this->flash('success', 'Projeto atualizado com sucesso!');
+        if (empty($rejeitados)) {
+            $this->flash('success', 'Projeto atualizado com sucesso!');
+        } else {
+            $this->flash('warning', 'Projeto atualizado com sucesso! Porém, o(s) arquivo(s) a seguir foi(ram) rejeitado(s) por tipo não permitido ou tamanho acima do limite: ' . implode(', ', $rejeitados) . '.');
+        }
         $this->redirect("projeto/{$projeto['id']}");
     }
 
@@ -269,16 +277,18 @@ class ProjetoController extends Controller
         return array_filter(array_map('trim', explode(',', $raw)));
     }
 
-    private function handleFileUploads(int $projetoId): void
+    private function handleFileUploads(int $projetoId): array
     {
+        $rejeitados = [];
+
         if (empty($_FILES['arquivos']['name'][0]))
-            return;
+            return $rejeitados;
 
         $files = $_FILES['arquivos'];
         $count = count($files['name']);
 
         for ($i = 0; $i < $count; $i++) {
-            if ($files['error'][$i] !== UPLOAD_ERR_OK)
+            if ($files['error'][$i] === UPLOAD_ERR_NO_FILE)
                 continue;
 
             $file = [
@@ -288,19 +298,28 @@ class ProjetoController extends Controller
                 'error' => $files['error'][$i],
             ];
 
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                $rejeitados[] = $file['name'];
+                continue;
+            }
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime = finfo_file($finfo, $file['tmp_name']) ?: 'application/octet-stream';
+            finfo_close($finfo);
+
             $caminho = upload_file($file, 'arquivos', ALLOWED_FILE_TYPES, MAX_FILE_SIZE);
             if ($caminho) {
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mime = finfo_file($finfo, $file['tmp_name']) ?: 'application/octet-stream';
-                finfo_close($finfo);
-
                 Arquivo::create($projetoId, [
                     'nome_original' => $file['name'],
                     'caminho' => $caminho,
                     'tipo_mime' => $mime,
                     'tamanho_kb' => (int) ceil($file['size'] / 1024),
                 ]);
+            } else {
+                $rejeitados[] = $file['name'];
             }
         }
+
+        return $rejeitados;
     }
 }

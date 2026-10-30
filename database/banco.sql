@@ -158,7 +158,7 @@ INSERT INTO tecnologias (nome) VALUES
 -- USUÁRIOS DE TESTE
 -- ============================================================
 
--- Professor (tipo: professor) — Senha: Prof@123
+-- Professor (tipo: professor)
 INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github) VALUES
     ('Prof. Rafael Souza', 'professor@ifsp.edu.br',
      '$2y$12$txs/LBUS1DKGli1uwkCxqul/ygn2t5Nu9ZgI/NBVYDm5c/02XBMYa',
@@ -167,7 +167,7 @@ INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github) VA
      'https://linkedin.com/in/rafael-souza',
      'https://github.com/rafaelsouza');
 
--- Aluno (tipo: aluno) — Senha: Aluno@123
+-- Aluno (tipo: aluno)
 INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github) VALUES
     ('Ana Clara Lima', 'aluno@ifsp.edu.br',
      '$2y$12$iWmIF.6bYjViGX.egJKD7.HPowBHba1XMH0gR6ng3CzzcR/J2Fh7O',

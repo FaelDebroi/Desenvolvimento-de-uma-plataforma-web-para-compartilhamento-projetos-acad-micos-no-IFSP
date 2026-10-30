@@ -1,6 +1,6 @@
 USE tcc_ifsp;
 
--- Professor — Senha: Prof@123
+-- Professor
 INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github)
 VALUES ('Prof. Rafael Souza', 'professor@teste.com',
         '$2y$12$txs/LBUS1DKGli1uwkCxqul/ygn2t5Nu9ZgI/NBVYDm5c/02XBMYa',
@@ -9,7 +9,7 @@ VALUES ('Prof. Rafael Souza', 'professor@teste.com',
         'https://linkedin.com/in/rafael-souza', 'https://github.com/rafaelsouza')
 ON DUPLICATE KEY UPDATE senha = VALUES(senha), nome = VALUES(nome);
 
--- Aluno — Senha: Aluno@123
+-- Aluno
 INSERT INTO usuarios (nome, email, senha, tipo, curso, bio, linkedin, github)
 VALUES ('Ana Clara Lima', 'aluno@teste.com',
         '$2y$12$iWmIF.6bYjViGX.egJKD7.HPowBHba1XMH0gR6ng3CzzcR/J2Fh7O',
